@@ -1,8 +1,17 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from users.models import User
 
 # Create your views here.
 
 
 def index(request):
-    return render(request, "homepage/index.html")
+    context = {}
+
+    login_session = request.session.get("login_session", "")
+
+    if login_session == "":
+        context["login_session"] = False
+    else:
+        context["login_session"] = True
+
+    return render(request, "homepage/index.html", context)

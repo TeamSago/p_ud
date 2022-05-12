@@ -24,4 +24,13 @@ urlpatterns = [
     path("home/", include("homepage.urls")),
     path("users/", include("users.urls")),
     path("", RedirectView.as_view(url="/home/", permanent=True)),
+    path("board/", include("board.urls")),
 ]
+
+# summernote 설정
+from django.conf import settings
+from django.conf.urls.static import static
+
+urlpatterns += [path("summernote/", include("django_summernote.urls"))]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

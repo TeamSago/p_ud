@@ -1,0 +1,46 @@
+{% extends 'homepage/index.html' %}
+
+{% block contents %}
+<div>Board</div>
+<div><a href="{% url 'board:board_write' %}"><button>Write</button></a></div>
+
+<div class="board">
+    <div class="py_boards">
+        <p>(Python Board)</p>
+        {% for board in py_boards %}
+        {% if board %}
+        <a href="/board/detail/{{ board.id }}" target="'_self">
+            <div>{{ board.title }} / {{ board.writer }} / {{ board.write_dttm }}</div>
+        </a>
+        {% endif %}
+        {% endfor %}
+    </div>
+    <div class="js_boards">
+        <p>(JavaScript Board)</p>
+        {% for board in js_boards %}
+        {% if board %}
+        <a href="/board/detail/{{ board.id }}" target="'_self">
+            <div>{{ board.title }} / {{ board.writer }} / {{ board.write_dttm }}</div>
+        </a>
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .board{
+        display: flex;
+    }
+
+    .py_boards {
+        width: 50%;
+    }
+
+    .js_boards {
+        width: 50%;
+        border-left: 2px black double;
+        padding-left: 25px;
+    }
+
+</style>
+{% endblock contents %}

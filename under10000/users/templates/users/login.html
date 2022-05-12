@@ -1,20 +1,22 @@
+{% extends 'homepage/index.html' %}
 
+{% block contents %}
+<div>Login Page</div>
 
-{% block content %}
-
-<h1>Login here.</h1>
-<form method="post" action="{% url 'users:login' %}">
+<form action="" method="POST">
     {% csrf_token %}
-    {% include 'users/form_errors.html' %} <!-- include error template-->
+    
+    {% for form in forms %} <!-- forms라는 key값으로 받아온 register_form -->
     <div>
-        <label>User ID</label>
-        <input type="text" name="username" id="username" placeholder="your ID here.">
+        <label for="{{ form.id_for_label }}">{{ form.label }}</label>
+        {{ form }}
     </div>
-    <div>
-        <label>Password</label>
-        <input type="password" name="password" id="password" placeholder="your password here">
-    </div>
-    <button type="submit">Login</button>
+    {% endfor %}
+
+    {% for form in forms %}
+    {{ form.errors }}
+    {% endfor %}
+    <button type="submit" name="login_submit" value="login">Login</button>
 </form>
 
-{% endblock %}
+{% endblock contents %}

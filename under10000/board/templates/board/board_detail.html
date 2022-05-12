@@ -1,0 +1,22 @@
+{% extends 'homepage/index.html' %}
+
+{% block contents %}
+<div>Board Detail</div>
+
+<a href=""><button>Edit</button></a>
+<a href=""><button>Delete</button></a>
+
+<div>
+    Board Category : {{ board.board_name }}
+</div>
+<div>
+    Writer : {{ board.writer }} | Date : {{ board.write_dttm }} | hits : {{ board.hits }}
+</div>
+<div>
+    Title : {{ board.title }}
+</div>
+<div>
+    Contents : {{ board.contents|safe }}
+</div>
+
+{% endblock contents %}
