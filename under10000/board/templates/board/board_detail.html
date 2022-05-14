@@ -3,9 +3,10 @@
 {% block contents %}
 <div>Board Detail</div>
 
-<a href=""><button>Edit</button></a>
-<a href=""><button>Delete</button></a>
-
+{% if writer %}
+<a href="/board/detail/{{ board.id }}/modify/"><button>Edit</button></a>
+<a href="/board/detail/{{ board.id }}/delete/"><button>Delete</button></a>
+{% endif %}
 <div>
     Board Category : {{ board.board_name }}
 </div>

@@ -39,7 +39,9 @@ class BoardWriteForm(forms.ModelForm):
             "contents",
             "board_name",
         ]
-        widgets = {"contents": SummernoteWidget()}
+        widgets = {
+            "contents": SummernoteWidget(),
+        }
 
     def clean(self):
         cleaned_data = super().clean()
