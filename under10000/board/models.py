@@ -24,3 +24,19 @@ class Board(models.Model):
         db_table = "board"
         verbose_name = "board"
         verbose_name_plural = "board"
+
+
+class PostHits(models.Model):
+    client_ip = models.GenericIPAddressField(
+        protocol="both", unpack_ipv4=False, null=True, verbose_name="User IP Addrress"
+    )
+    date = models.DateField(auto_now_add=True, verbose_name="Hit date")
+    post = models.Foreignkey("Board", on_delete=models.CASCADE, verbose_name="post")
+
+    def __str__(self):
+        return str(self.post.id)
+
+    class Meta:
+        db_table = "post_hits"
+        verbose_name = "hits model"
+        verbose_name = "hits model"

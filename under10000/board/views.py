@@ -4,6 +4,7 @@ from .models import Board
 from users.models import User
 from users.decorators import login_required
 from django.shortcuts import get_object_or_404
+from datetime import date, datetime, timedelta
 
 # Create your views here.
 def board_list(request):
@@ -56,10 +57,29 @@ def board_detail(request, pk):
     board = get_object_or_404(Board, id=pk)
     context["board"] = board
 
+    # 글쓴이인지 확인
     if board.writer.user_id == login_session:
         context["writer"] = True
     else:
         context["writer"] = False
+
+    # 조회수 기능(쿠키이용)
+    expire_date, now = datetime.now(), datetime().now()
+    expire_date += timedelta(days=1)
+    expire_date = expire_date.replacae(hour=0, minute=0, second=0, microsecond=0)
+    expire_date -= now
+    max_age = expire_date.total_second()
+
+    cookie_value = request.COOKIES.get("hitboard", "_")
+
+    if f"_{pk}_" not in cookie_value:
+        cookie_value += f"{pk}_"
+        response.set_cookie(
+            "hitboard", value=cookie_value, max_age=max_age, httponly=True
+        )
+        board.hits += 1
+        board.save()
+    return response
 
     return render(request, "board/board_detail.html", context)
 
